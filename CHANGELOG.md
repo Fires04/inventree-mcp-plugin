@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v1.1.1 (2026-06-06)
+
+### Bug Fixes
+
+- **update_part**: Replace `**kwargs` with explicit typed parameters so FastMCP can
+  generate a valid JSON schema for the tool. Previously calling `update_part` always
+  failed with a pydantic validation error because `**kwargs: bool | str` cannot be
+  serialized to a JSON schema input model.
+
 ## v1.1.0 (2026-02-26)
 
 ### Bug Fixes

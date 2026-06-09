@@ -149,3 +149,39 @@ class TestCreatePart:
             result = await create_part(name="New Part", description="A new part", category_id=1)
             assert result["id"] == 99
             assert result["name"] == "New Part"
+
+
+class TestUpdatePart:
+    async def test_update_part_description(self, mock_part_class: MagicMock) -> None:
+        mock_part = _make_mock_part(pk=10)
+        mock_part_class.objects.get.return_value = mock_part
+
+        from inventree_mcp_plugin.tools.simple.parts import update_part
+
+        result = await update_part(part_id=10, description="New description")
+        assert result["id"] == 10
+        assert mock_part.description == "New description"
+        mock_part.save.assert_called_once()
+
+    async def test_update_part_multiple_fields(self, mock_part_class: MagicMock) -> None:
+        mock_part = _make_mock_part(pk=5)
+        mock_part_class.objects.get.return_value = mock_part
+
+        from inventree_mcp_plugin.tools.simple.parts import update_part
+
+        result = await update_part(part_id=5, name="Updated Name", IPN="NEW-IPN", active=False)
+        assert mock_part.name == "Updated Name"
+        assert mock_part.IPN == "NEW-IPN"
+        assert mock_part.active is False
+        mock_part.save.assert_called_once()
+
+    async def test_update_part_no_fields_noop(self, mock_part_class: MagicMock) -> None:
+        mock_part = _make_mock_part(pk=7)
+        mock_part_class.objects.get.return_value = mock_part
+        original_name = mock_part.name
+
+        from inventree_mcp_plugin.tools.simple.parts import update_part
+
+        await update_part(part_id=7)
+        assert mock_part.name == original_name
+        mock_part.save.assert_called_once()

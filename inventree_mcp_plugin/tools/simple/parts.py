@@ -264,20 +264,41 @@ def create_part(
 
 @mcp.tool()
 @django_orm
-def update_part(part_id: int, **kwargs: bool | str) -> dict[str, Any]:
+def update_part(
+    part_id: int,
+    name: str | None = None,
+    description: str | None = None,
+    active: bool | None = None,
+    IPN: str | None = None,
+    revision: str | None = None,
+    units: str | None = None,
+) -> dict[str, Any]:
     """Update an existing part's fields.
 
     Args:
         part_id: The ID of the part to update.
-        **kwargs: Fields to update (name, description, active, IPN, revision, units).
+        name: New name for the part.
+        description: New description for the part.
+        active: Set the active status of the part.
+        IPN: New Internal Part Number.
+        revision: New revision string.
+        units: New units of measure.
     """
     from part.models import Part
 
-    allowed_fields = {"name", "description", "active", "IPN", "revision", "units"}
     p = Part.objects.get(pk=part_id)
-    for field, value in kwargs.items():
-        if field in allowed_fields:
-            setattr(p, field, value)
+    if name is not None:
+        p.name = name
+    if description is not None:
+        p.description = description
+    if active is not None:
+        p.active = active
+    if IPN is not None:
+        p.IPN = IPN
+    if revision is not None:
+        p.revision = revision
+    if units is not None:
+        p.units = units
     p.save()
     return {
         "id": p.pk,
