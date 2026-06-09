@@ -1,5 +1,9 @@
 # inventree-mcp-plugin
 
+> **Fork notice:** This is a community fork of [eljefedelrodeodeljefe/inventree-mcp-plugin](https://github.com/eljefedelrodeodeljefe/inventree-mcp-plugin),
+> maintained by **David Stein**. The bug fix in v1.1.1 (repair of the `update_part` tool)
+> was identified and developed with the assistance of [Claude](https://claude.ai) (Anthropic AI).
+
 MCP (Model Context Protocol) server plugin for [InvenTree](https://inventree.org/). Exposes InvenTree inventory data through standardized MCP tools, allowing AI assistants like Claude to interact with your inventory.
 
 ## Features

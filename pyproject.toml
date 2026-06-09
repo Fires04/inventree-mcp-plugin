@@ -5,7 +5,10 @@ description = "MCP (Model Context Protocol) server plugin for InvenTree"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
-authors = [{ name = "eljefedelrodeodeljefe" }]
+authors = [
+  { name = "eljefedelrodeodeljefe" },
+  { name = "David Stein" },
+]
 
 dependencies = [
     "mcp>=1.9",
